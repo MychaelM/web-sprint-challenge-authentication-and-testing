@@ -29,6 +29,26 @@ describe("tests auth integration", () => {
       expect(res.type).toBe("application/json")
       expect(res.body.username).toBe("test")
   })
+
+  it("sends missing password data on register", async () => {
+    const res = await supertest(server).post("/api/auth/register").send({
+      username: "test",
+    });
+
+    expect(res.statusCode).toBe(401);
+    expect(res.type).toBe("application/json");
+    expect(res.body.message).toBe("username and password required");
+  })
+
+  it("sends missing username data on register", async () => {
+    const res = await supertest(server).post("/api/auth/register").send({
+      password: "test",
+    });
+
+    expect(res.statusCode).toBe(401);
+    expect(res.type).toBe("application/json");
+    expect(res.body.message).toBe("username and password required");
+  })
 })
 
 

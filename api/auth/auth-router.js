@@ -34,7 +34,13 @@ router.post('/register', async (req, res, next) => {
 
   try{
     const { username, password } = req.body
+    if(!req.body.password || !req.body.username) {
+      return res.status(401).json({
+        message: "username and password required",
+      });
+    }
     const user = await Users.findByUsername(username)
+
 
     if(user) {
       return res.status(409).json({
