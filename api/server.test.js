@@ -49,6 +49,24 @@ describe("tests auth integration", () => {
     expect(res.type).toBe("application/json");
     expect(res.body.message).toBe("username and password required");
   })
+
+  it("successfully logs in", async () => {
+    const res = await supertest(server).post("/api/auth/register").send({
+      username: "test",
+      password: "abc123",
+    });
+    const res2 = await supertest(server).post("/api/auth/login").send({
+      username: "test",
+      password: "abc123"
+    })
+
+    console.log(res)
+
+    expect(res2.statusCode).toBe(200)
+    expect(res2.type).toBe("application/json")
+    expect(res2.body.message).toBe("welcome, test")
+    expect(res2.body.token).toBeTruthy()
+  })
 })
 
 
