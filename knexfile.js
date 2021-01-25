@@ -14,6 +14,7 @@ module.exports = {
   },
   testing: {
     ...sharedConfig,
+    migrations: { directory: './data/migrations' },
     connection: { filename: './data/test.db3' },
   },
 };
